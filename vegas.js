@@ -101,7 +101,7 @@ Vegas.Collection = (function() {
             if (_model instanceof Object) {
               _model = new Vegas.Model(this.url, _model);
             } else {
-              throw "Cannot instance model in collection: invalid model";
+              throw "Cannot instantiate model in collection: invalid model";
             }
           }
           this.models.push(_model);
