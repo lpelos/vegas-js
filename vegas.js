@@ -18,7 +18,7 @@ Vegas.Model = (function() {
 
   VegasModel.prototype.fetch = function() {
     if (this.get("id")) {
-      this.set(localStorage.getObject(this.url + "<" + this.get("id") + ">"));
+      this.set(this.getObject(this.url + "<" + this.get("id") + ">"));
       return this;
     } else {
       throw "Impossible to fetch model with no id";
@@ -40,7 +40,7 @@ Vegas.Model = (function() {
 
   VegasModel.prototype.save = function(attributes) {
     if (this.isNew()) this.set("id", generateId.call(this));
-    localStorage.setObject(this.url + "<" + this.get("id") + ">", this.attributes);
+    this.setObject(this.url + "<" + this.get("id") + ">", this.attributes);
     return true;
   };
 
@@ -98,11 +98,8 @@ Vegas.Collection = (function() {
           // Before pushing it to this Collection's array of models,
           // converts model object into Vegas.Model instance
           if (!(_model instanceof Vegas.Model)) {
-            if (_model instanceof Object) {
-              _model = new Vegas.Model(this.url, _model);
-            } else {
-              throw "Cannot instantiate model in collection: invalid model";
-            }
+            _model = new Vegas.Model(_model);
+            _model.url = this.url;
           }
           this.models.push(_model);
         }
@@ -118,8 +115,8 @@ Vegas.Collection = (function() {
     for (var key in localStorage) {
       var criteria = new RegExp(this.url + "<\\d+>")
       if (key.match(criteria)) {
-        var attributes = localStorage.getObject(key);
-        var model = new Vegas.Model(this.url, attributes);
+        var attributes = Vegas.Model.getObject(key);
+        var model = new Vegas.Model(attributes);
         this.models.push(model);
       };
     }
