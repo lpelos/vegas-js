@@ -2,21 +2,30 @@ var Vegas = {};
 
 // Model
 Vegas.Model = (function() {
-  function VegasModel(url, attributes) {
-    if (url) {
-      this.url = url;
-      this.attributes = attributes || {} ;
-    } else {
-      throw "Model must have an url";
+  function VegasModel(properties) {
+    if (properties && !(properties instanceof Object))
+      throw "Cannot instantiate new VagasModel: invalid arguments";
+
+    // setting Model url: localHost access key
+    if (properties && properties.url) {
+      this.url = properties.url;
+      delete properties.url;
     }
+
+    // setting Model attributes;
+    this.attributes = properties || {} ;
   };
 
   VegasModel.prototype.destroy = function() {
+    if (!this.url) throw "Cannot destroy model with no url";
+
     delete localStorage[this.url + "<" + this.get("id") + ">"];
     return this;
   };
 
   VegasModel.prototype.fetch = function() {
+    if (!this.url) throw "Cannot fetch model with no url";
+
     if (this.get("id")) {
       this.set(this.getObject(this.url + "<" + this.get("id") + ">"));
       return this;
@@ -39,6 +48,8 @@ Vegas.Model = (function() {
   };
 
   VegasModel.prototype.save = function(attributes) {
+    if (!this.url) throw "Cannot save model with no url";
+
     if (this.isNew()) this.set("id", generateId.call(this));
     this.setObject(this.url + "<" + this.get("id") + ">", this.attributes);
     return true;
