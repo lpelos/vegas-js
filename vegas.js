@@ -13,7 +13,7 @@ Vegas.Model = (function() {
     }
 
     // setting Model attributes;
-    this.attributes = properties || {} ;
+    this.attributes = properties || {};
   };
 
   VegasModel.prototype.destroy = function() {
@@ -90,6 +90,51 @@ Vegas.Model = (function() {
 
   return VegasModel;
 })();
+
+Vegas.Model.extend = function(customProperties) {
+  if (customProperties && !(customProperties instanceof Object))
+    throw "Cannot extend VegasModel: invalid arguments";
+
+  // isolating url from customProperties, if given
+  var url = customProperties.url || null;
+  delete customProperties.url;
+
+  // isolating initializer, if given
+  var initializer = customProperties.initialize || null;
+  delete customProperties.initializer;
+
+  // isolating methods from customProperties, if any
+  var methods = {};
+  for (var key in customProperties) {
+    var property = customProperties[key];
+
+    if (typeof property == "function") {
+      methods[key] = property;
+      delete property;
+    }
+  }
+
+  // CustomVegasModel constructor
+  var CustomModel = function CustomVegasModel() {
+    Vegas.Model.call(this, customProperties);
+    if (initializer) initializer.call(this, arguments);
+  };
+  
+  // inheritin VegasModel methods
+  for (var key in Vegas.Model) {
+    CustomModel.prototype[key] = Vegas.Model[key];
+  }
+
+  // applying saved url, if exists
+  if (url) CustomModel.prototype.url = url;
+
+  // applying saved methods, if any
+  for (var key in methods) {
+    CustomModel.prototype[key] = methods[key];
+  }
+
+  return CustomModel;
+};
 
 // Collection
 Vegas.Collection = (function() {
