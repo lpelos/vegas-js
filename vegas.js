@@ -16,12 +16,15 @@ Vegas.Model = (function() {
     this.attributes = properties || {};
   };
 
+  // Instance Methods
   VegasModel.prototype.destroy = function() {
     if (!this.url) throw "Cannot destroy model with no url";
 
     delete localStorage[this.url + "<" + this.get("id") + ">"];
     return this;
   };
+
+  VegasModel.prototype.extend = extendVegasModel;
 
   VegasModel.prototype.fetch = function() {
     if (!this.url) throw "Cannot fetch model with no url";
@@ -75,7 +78,63 @@ Vegas.Model = (function() {
     localStorage.setItem(key, JSON.stringify(value));
   };
 
+  // Class methods
+  VegasModel.extend = extendVegasModel;
+
   // Private
+  function extendVegasModel(customProperties) {
+    if (customProperties) {
+      if (!(customProperties instanceof Object))
+        throw "Cannot extend VegasModel: invalid arguments";
+
+      // isolating url from customProperties, if given
+      var url = customProperties.url || null;
+      delete customProperties.url;
+
+      // isolating initializer, if given
+      var initializer = customProperties.initialize || null;
+
+      // isolating methods from customProperties, if any
+      var methods = {};
+      for (var key in customProperties) {
+        var property = customProperties[key];
+
+        if (typeof property == "function") {
+          methods[key] = property;
+          delete property;
+        }
+      }
+    }
+
+    // Custom VegasModel constructor
+    VegasModel = function() {
+      ParentModel.call(this, customProperties);
+      if (initializer) initializer.call(this, arguments);
+    };
+
+    // Inherit from ParentModel
+    var ParentModel = this;
+    for (var key in ParentModel) {
+      if (ParentModel.hasOwnProperty(key))
+        VegasModel[key] = ParentModel[key];
+    }
+    var ctor = function() { this.constructor = VegasModel; }
+    ctor.prototype = ParentModel.prototype;
+    VegasModel.prototype = new ctor;
+    VegasModel.prototype.constructor = VegasModel;
+    VegasModel.prototype.__super__ = ParentModel.prototype;
+
+    // applying saved url, if exists
+    if (url) VegasModel.prototype.url = url;
+
+    // applying saved methods, if any
+    for (var key in methods) {
+      VegasModel.prototype[key] = methods[key];
+    }
+
+    return VegasModel;
+  };
+
   function generateId() {
     var count = localStorage.getItem(this.url + "Count");
     if (!count || isNaN(parseFloat(count)) || !isFinite(count) ) {
@@ -90,51 +149,6 @@ Vegas.Model = (function() {
 
   return VegasModel;
 })();
-
-Vegas.Model.extend = function(customProperties) {
-  if (customProperties && !(customProperties instanceof Object))
-    throw "Cannot extend VegasModel: invalid arguments";
-
-  // isolating url from customProperties, if given
-  var url = customProperties.url || null;
-  delete customProperties.url;
-
-  // isolating initializer, if given
-  var initializer = customProperties.initialize || null;
-  delete customProperties.initializer;
-
-  // isolating methods from customProperties, if any
-  var methods = {};
-  for (var key in customProperties) {
-    var property = customProperties[key];
-
-    if (typeof property == "function") {
-      methods[key] = property;
-      delete property;
-    }
-  }
-
-  // CustomVegasModel constructor
-  var CustomModel = function CustomVegasModel() {
-    Vegas.Model.call(this, customProperties);
-    if (initializer) initializer.call(this, arguments);
-  };
-  
-  // inheritin VegasModel methods
-  for (var key in Vegas.Model) {
-    CustomModel.prototype[key] = Vegas.Model[key];
-  }
-
-  // applying saved url, if exists
-  if (url) CustomModel.prototype.url = url;
-
-  // applying saved methods, if any
-  for (var key in methods) {
-    CustomModel.prototype[key] = methods[key];
-  }
-
-  return CustomModel;
-};
 
 // Collection
 Vegas.Collection = (function() {
