@@ -1,12 +1,3 @@
-Storage.prototype.setObject = function(key, value) {
-  this.setItem(key, JSON.stringify(value));
-}
-
-Storage.prototype.getObject = function(key) {
-  var value = this.getItem(key);
-  return value && JSON.parse(value);
-}
-
 var Vegas = {};
 
 // Model
@@ -38,6 +29,11 @@ Vegas.Model = (function() {
     return this.attributes[attr];
   };
 
+  VegasModel.prototype.getObject = function(key) {
+    var value = localStorage.getItem(key);
+    return value && JSON.parse(value);
+  };
+
   VegasModel.prototype.isNew = function() {
     return this.get("id") === undefined || this.id === null
   };
@@ -62,6 +58,10 @@ Vegas.Model = (function() {
       throw "Impossible to set attributes: invalid arguments"
     }
     return this;
+  };
+
+  VegasModel.prototype.setObject = function(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
   };
 
   // Private
