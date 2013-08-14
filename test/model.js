@@ -134,7 +134,9 @@ describe("VegasModel", function() {
       });
 
       context("when the argument is object", function() {
-        model.set({c: 3});
+        it("returns the model", function() {
+          expect(model.set({c: 3})).to.eql(model);
+        });
 
         it("merges the given object with in the model attributes", function() {
           expect(model.get("c")).to.be(3);
@@ -187,7 +189,7 @@ describe("VegasModel", function() {
     });
   });
 
-  describe.only("#fetch", function() {
+  describe("#fetch", function() {
 
     context("when model has no url", function() {
       var model = new Vegas.Model({name: "name", address: "address"});
@@ -251,7 +253,6 @@ describe("VegasModel", function() {
       });
 
     });
-
   });
 
 function cloneObj(originalObj) {
