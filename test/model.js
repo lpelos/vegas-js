@@ -98,9 +98,15 @@ describe("Model", function() {
       });
     });
 
-    context("with a non existent attributes", function() {
+    context("with an invalid key", function() {
       it("returns undefined", function() {
-        expect(model.get()).to.be(undefined);
+        expect(model.get({a: 1}, function(){})).to.be(undefined);
+      });
+    });
+
+    context("with a non existent attribute key", function() {
+      it("returns undefined", function() {
+        expect(model.get("c")).to.be(undefined);
       });
     });
 
