@@ -218,6 +218,7 @@ describe("VegasModel", function() {
       context("when there's no object correspondent to the model's id inside localStorage", function() {
         beforeEach(function() {
           model.set("id", 1);
+          localStorage.clear()
         });
 
         it("returns null", function() {
@@ -234,6 +235,7 @@ describe("VegasModel", function() {
       context("when the object correspondent to the model's id exists", function() {
         beforeEach(function() {
           model.set("id", 42);
+          localStorage.setItem("models<42>", '{"name":"Lucas"}');
         });
 
         it("returns the model", function() {
@@ -241,7 +243,6 @@ describe("VegasModel", function() {
         });
 
         it("merges the localStorage object with the models current params", function() {
-          localStorage.setItem("models<42>", '{"name":"Lucas"}');
           model.fetch();
 
           expect(model.attributes).to.eql({
@@ -255,12 +256,53 @@ describe("VegasModel", function() {
     });
   });
 
-function cloneObj(originalObj) {
-  var obj = {};
-  for (var key in originalObj) {
-    obj[key] = originalObj[key];
+  describe("#save", function() {
+    var model;
+    beforeEach(function() {
+      model = new Vegas.Model;
+      localStorage.clear();
+    });
+
+    context("when model has no URL", function() {
+      it("raises an exception", function() {
+        expect(model.save).to.throwException();
+      });
+    });
+
+    context("when model has an URL", function() {
+      beforeEach(function() {
+        model.url = "models";
+      });
+
+      context("when model has no id", function() {
+        it("generates a new numeric id and sets a model attribute", function() {
+          delete model.attributes.id;
+          model.save();
+          expect(model.get("id")).to.be('1');
+        });
+      });
+
+      it("saves the model attributes in the localStorage as a JSON string", function() {
+        model.set({name: "name", address: "address"}).save();
+        var key = model.url + "<" + model.get("id") + ">";
+        var jsonifiedAttributes = JSON.stringify(model.attributes);
+
+        expect(localStorage.getItem(key)).to.be(jsonifiedAttributes);
+      });
+
+      it("returns the model", function() {
+        expect(model.save()).to.be.ok();
+      });
+    });
+  });
+
+
+  function cloneObj(originalObj) {
+    var obj = {};
+    for (var key in originalObj) {
+      obj[key] = originalObj[key];
+    }
+    return obj;
   }
-  return obj;
-}
 
 });
