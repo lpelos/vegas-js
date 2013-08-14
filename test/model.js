@@ -1,9 +1,9 @@
-describe("Model", function() {
+describe("VegasModel", function() {
 
   describe("constructor", function() {
 
     context("when no params are given", function() {
-      var model = new Vegas.Model();
+      var model = new Vegas.Model;
 
       describe("#url", function() {
         it("exists", function() {
@@ -168,7 +168,23 @@ describe("Model", function() {
         expect(model.set).withArgs("1", 2, 5).to.throwException();
       });
     });
+  });
 
+  describe("#isNew", function() {
+    context("when the model has no id", function() {
+      var model = new Vegas.Model;
+      it("returns true", function() {
+        expect(model.isNew()).to.be(true);
+      });
+    });
+
+    context("when the model has an id", function() {
+      var model = new Vegas.Model({"id": 1});
+
+      it("returns false", function() {
+        expect(model.isNew()).to.be(false);
+      });
+    });
   });
 
 });

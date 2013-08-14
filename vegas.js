@@ -51,7 +51,7 @@ var Vegas = (function() {
     };
 
     VegasModel.prototype.isNew = function() {
-      return this.get("id") === undefined || this.id === null
+      return this.get("id") === undefined;
     };
 
     VegasModel.prototype.save = function(attributes) {
