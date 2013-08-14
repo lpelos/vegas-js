@@ -54,7 +54,7 @@ var Vegas = (function() {
       return this.get("id") === undefined;
     };
 
-    VegasModel.prototype.save = function(attributes) {
+    VegasModel.prototype.save = function() {
       if (!this.url) throw "Cannot save model with no url";
 
       if (this.isNew()) this.set("id", generateId.call(this));
