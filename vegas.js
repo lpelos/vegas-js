@@ -34,8 +34,13 @@ var Vegas = (function() {
       if (!this.url) throw "Cannot fetch model with no url";
 
       if (this.get("id")) {
-        this.set(this.getObject(this.url + "<" + this.get("id") + ">"));
-        return this;
+        var attributes = getObject(this.url + "<" + this.get("id") + ">");
+        if (attributes) {
+          this.set(attributes);
+          return this;
+        } else {
+          return attributes;
+        }
       } else {
         throw "Impossible to fetch model with no id";
       }
@@ -43,11 +48,6 @@ var Vegas = (function() {
 
     VegasModel.prototype.get = function(attr) {
       return this.attributes[attr];
-    };
-
-    VegasModel.prototype.getObject = function(key) {
-      var value = localStorage.getItem(key);
-      return value && JSON.parse(value);
     };
 
     VegasModel.prototype.isNew = function() {
@@ -58,7 +58,7 @@ var Vegas = (function() {
       if (!this.url) throw "Cannot save model with no url";
 
       if (this.isNew()) this.set("id", generateId.call(this));
-      this.setObject(this.url + "<" + this.get("id") + ">", this.attributes);
+      setObject(this.url + "<" + this.get("id") + ">", this.attributes);
       return true;
     };
 
@@ -76,10 +76,6 @@ var Vegas = (function() {
         throw "Impossible to set attributes: invalid arguments"
       }
       return this;
-    };
-
-    VegasModel.prototype.setObject = function(key, value) {
-      localStorage.setItem(key, JSON.stringify(value));
     };
 
     // Class methods
@@ -149,7 +145,16 @@ var Vegas = (function() {
       localStorage.setItem(this.url + "Count", i+1);
 
       return localStorage.getItem(this.url + "Count");
-    }
+    };
+
+    function getObject(key) {
+      var value = localStorage.getItem(key);
+      return value && JSON.parse(value);
+    };
+
+    function setObject(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    };
 
     return VegasModel;
   })();
