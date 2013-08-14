@@ -87,7 +87,28 @@ describe("Model", function() {
         });
       });
     });
+  });
 
+  describe("#get", function() {
+    var model = new Vegas.Model({ a: 1, b: 2 });
+
+    context("with no params", function() {
+      it("returns undefined", function() {
+        expect(model.get()).to.be(undefined);
+      });
+    });
+
+    context("with a non existent attributes", function() {
+      it("returns undefined", function() {
+        expect(model.get()).to.be(undefined);
+      });
+    });
+
+    context("with an existent attributes", function() {
+      it("returns the value of the attributes key with the given name", function() {
+        expect(model.get("a")).to.be(1);
+      });
+    });
   });
 
 });
