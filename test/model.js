@@ -187,4 +187,79 @@ describe("VegasModel", function() {
     });
   });
 
+  describe.only("#fetch", function() {
+
+    context("when model has no url", function() {
+      var model = new Vegas.Model({name: "name", address: "address"});
+      
+      it("raises an exception", function() {
+        expect(model.fetch).to.throwException();
+      });
+    });
+
+    context("when model has an URL", function() {
+      var model;
+      beforeEach(function() {
+        model = new Vegas.Model({
+          url: "models",
+          name: "name",
+          address: "address"
+        });
+      })
+
+      context("when model has no id", function() {
+        it("raises an exception", function() {
+          expect(model.fetch).to.throwException();
+        });
+      });
+
+      context("when there's no object correspondent to the model's id inside localStorage", function() {
+        beforeEach(function() {
+          model.set("id", 1);
+        });
+
+        it("returns null", function() {
+          expect(model.fetch()).to.be(null);
+        });
+
+        it("does not modify the model attributes", function() {
+          var originalAttr = cloneObj(model.attributes);
+          model.fetch();
+          expect(model.attributes).to.eql(originalAttr);
+        });
+      });
+
+      context("when the object correspondent to the model's id exists", function() {
+        beforeEach(function() {
+          model.set("id", 42);
+        });
+
+        it("returns the model", function() {
+          expect(model.fetch()).to.eql(model);
+        });
+
+        it("merges the localStorage object with the models current params", function() {
+          localStorage.setItem("models<42>", '{"name":"Lucas"}');
+          model.fetch();
+
+          expect(model.attributes).to.eql({
+            id: 42,
+            name: "Lucas",
+            address: "address"
+          });
+        });
+      });
+
+    });
+
+  });
+
+function cloneObj(originalObj) {
+  var obj = {};
+  for (var key in originalObj) {
+    obj[key] = originalObj[key];
+  }
+  return obj;
+}
+
 });
