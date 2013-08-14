@@ -117,4 +117,58 @@ describe("Model", function() {
     });
   });
 
+  describe("#set", function() {
+    var model = new Vegas.Model({a: 1, b: 2});
+
+    context("with no arguments", function() {
+      it("raises an exception", function() {
+        expect(model.set).to.throwException();
+      });
+    });
+
+    context("with 1 argument", function() {
+      context("when the argument is not an object", function() {
+        it("raises an exception", function() {
+          expect(model.set).withArgs("invalid args").to.throwException();
+        });
+      });
+
+      context("when the argument is object", function() {
+        model.set({c: 3});
+
+        it("merges the given object with in the model attributes", function() {
+          expect(model.get("c")).to.be(3);
+        });
+
+        it("keeps the old attributes", function() {
+          expect(model.get("a")).to.be(1);
+          expect(model.get("b")).to.be(2);
+        });
+      });
+    });
+
+    context("with 2 arguments", function() {
+      context("when first argument is not a string", function() {
+        it("raises an exception", function() {
+          expect(model.set).withArgs(1, "argument").to.throwException();
+        });
+      });
+
+      context("when first argument is a string", function() {
+        model.set("attr", 1);
+
+        it("sets the second argument as the value of a attribute which key equals the first argument", function() {
+          expect(model.get("attr")).to.be(1);
+        });
+      });
+    });
+
+    context("with more than 2 arguments", function() {
+      it("raises an exception", function() {
+        expect(model.set).withArgs("1", 2, 5).to.throwException();
+      });
+    });
+
+  });
+
 });
