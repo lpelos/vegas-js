@@ -79,28 +79,14 @@ var Vegas = (function() {
     };
 
     // Class methods
-    VegasModel.extend = function(customProperties) {
-      if (customProperties) {
-        if (!(customProperties instanceof Object))
+    VegasModel.extend = function(properties) {
+      if (properties) {
+        if (!(properties instanceof Object))
           throw "Cannot extend VegasModel: invalid arguments. Argument should be an object";
 
-        // isolating url from customProperties, if given
-        var url = customProperties.url || null;
-        delete customProperties.url;
-
         // isolating initializer, if given
-        var initializer = customProperties.initialize || null;
-
-        // isolating methods from customProperties, if any
-        var methods = {};
-        for (var key in customProperties) {
-          var property = customProperties[key];
-
-          if (typeof property == "function") {
-            methods[key] = property;
-            delete property;
-          }
-        }
+        var initializer = properties.initialize || null;
+        var customProperties = properties;
       }
 
       // Custom VegasModel class
@@ -116,12 +102,9 @@ var Vegas = (function() {
 
       })(VegasModel, initializer);
 
-      // applying saved url, if exists
-      if (url) CustomModel.prototype.url = url;
-
-      // applying saved methods, if any
-      for (var key in methods) {
-        CustomModel.prototype[key] = methods[key];
+      // applying saved customProperties, if any
+      for (var key in customProperties) {
+        CustomModel.prototype[key] = customProperties[key];
       }
 
       return CustomModel;
