@@ -2,7 +2,6 @@ describe("VegasModel", function() {
 
   describe("constructor", function() {
 
-    
     context("when no params are given", function() {
       var model = new Vegas.Model;
 
@@ -243,6 +242,14 @@ describe("VegasModel", function() {
         });
 
         it("does not modify the model attributes", function() {
+          function cloneObj(originalObj) {
+            var obj = {};
+            for (var key in originalObj) {
+              obj[key] = originalObj[key];
+            }
+            return obj;
+          }
+
           var originalAttr = cloneObj(model.attributes);
           model.fetch();
           expect(model.attributes).to.eql(originalAttr);
@@ -342,15 +349,74 @@ describe("VegasModel", function() {
         expect(localStorage[key]).to.be(undefined);
       });
     });
-
   });
 
-  function cloneObj(originalObj) {
-    var obj = {};
-    for (var key in originalObj) {
-      obj[key] = originalObj[key];
-    }
-    return obj;
-  }
+  describe(".extend", function() {
+    it("returns a constructor function", function() {
+      expect(typeof Vegas.Model.extend()).to.be("function");
+    });
+
+    context("when taking no arguments", function() {
+
+      describe("extended constructor function", function() {
+        var Model;
+        beforeEach(function() {
+          Model = Vegas.Model.extend();
+        });
+
+        it("inherits .extend", function() {
+          expect(Model.extend).to.eql(Vegas.Model.extend);
+        });
+
+        it("inherits all instances properties", function() {
+          var model = new Model;
+
+          expect(model.url).to.not.be(undefined);
+          expect(model.attributes).to.not.be(undefined);
+        });
+
+        it("inherits all instances methods", function() {
+          var vegasModel = new Vegas.Model();
+          var model = new Model;
+
+          expect(model.destroy).to.eql(vegasModel.destroy);
+          expect(model.fetch).to.eql(vegasModel.fetch);
+          expect(model.get).to.eql(vegasModel.get);
+          expect(model.isNew).to.eql(vegasModel.isNew);
+          expect(model.save).to.eql(vegasModel.save);
+          expect(model.set).to.eql(vegasModel.set);
+        });
+
+        it("accepts an url on inicialization", function() {
+          var model = new Model({url: "my/model/url"});
+          expect(model.url).to.be("my/model/url");
+        });
+
+        it("accepts attributes on inicialization", function() {
+          var model = new Model({name: "John", lastName: "Doe"});
+          expect(model.get("name")).to.be("John");
+          expect(model.get("lastName")).to.be("Doe");
+        });
+      });
+    });
+
+    context("when taking invalid arguments", function() {
+      it("raises an exception", function() {
+        expect(Vegas.Model.extend).withArgs("invalid argument").to.throwException();
+      });
+    });
+
+    context("when taking a valid argument", function() {
+      it("does not raises an exception", function() {
+        expect(Vegas.Model.extend).withArgs({
+          url: "my/custom/model/url",
+          someProperty: "someValue",
+          someMethod: function() {
+            return "something";
+          }
+        }).to.not.throwException();
+      });
+    });
+  });
 
 });
