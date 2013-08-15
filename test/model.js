@@ -357,45 +357,38 @@ describe("VegasModel", function() {
     });
 
     context("when taking no arguments", function() {
+      var Model = Vegas.Model.extend();
+      var model = new Model;
 
-      describe("extended constructor function", function() {
-        var Model;
-        beforeEach(function() {
-          Model = Vegas.Model.extend();
+      it("does not raises an exception", function() {
+        expect(Vegas.Model.extend).to.not.throwException();
+      });
+
+      it("inherits .extend", function() {
+        expect(Model.extend).to.eql(Vegas.Model.extend);
+      });
+
+      it("inherits all instances methods", function() {
+        var vegasModel = new Vegas.Model();
+        var model = new Model;
+
+        expect(model.destroy).to.eql(vegasModel.destroy);
+        expect(model.fetch).to.eql(vegasModel.fetch);
+        expect(model.get).to.eql(vegasModel.get);
+        expect(model.isNew).to.eql(vegasModel.isNew);
+        expect(model.save).to.eql(vegasModel.save);
+        expect(model.set).to.eql(vegasModel.set);
+      });
+
+      describe("#url", function() {
+        it("is an empty string", function() {
+          expect(model.url).to.be("");
         });
+      });
 
-        it("inherits .extend", function() {
-          expect(Model.extend).to.eql(Vegas.Model.extend);
-        });
-
-        it("inherits all instances properties", function() {
-          var model = new Model;
-
-          expect(model.url).to.not.be(undefined);
-          expect(model.attributes).to.not.be(undefined);
-        });
-
-        it("inherits all instances methods", function() {
-          var vegasModel = new Vegas.Model();
-          var model = new Model;
-
-          expect(model.destroy).to.eql(vegasModel.destroy);
-          expect(model.fetch).to.eql(vegasModel.fetch);
-          expect(model.get).to.eql(vegasModel.get);
-          expect(model.isNew).to.eql(vegasModel.isNew);
-          expect(model.save).to.eql(vegasModel.save);
-          expect(model.set).to.eql(vegasModel.set);
-        });
-
-        it("accepts an url on inicialization", function() {
-          var model = new Model({url: "my/model/url"});
-          expect(model.url).to.be("my/model/url");
-        });
-
-        it("accepts attributes on inicialization", function() {
-          var model = new Model({name: "John", lastName: "Doe"});
-          expect(model.get("name")).to.be("John");
-          expect(model.get("lastName")).to.be("Doe");
+      describe("#attributes", function() {
+        it("is an empty object", function() {
+          expect(model.attributes).to.eql({});
         });
       });
     });
@@ -407,14 +400,109 @@ describe("VegasModel", function() {
     });
 
     context("when taking a valid argument", function() {
+      var validArgument = {
+        url: "my/custom/model/url",
+        someProperty: "someValue",
+        someMethod: function() {
+          return "something";
+        }
+      }
+      var Model = Vegas.Model.extend(validArgument);
+
       it("does not raises an exception", function() {
-        expect(Vegas.Model.extend).withArgs({
-          url: "my/custom/model/url",
-          someProperty: "someValue",
-          someMethod: function() {
-            return "something";
+        expect(Vegas.Model.extend).withArgs(validArgument).to.not.throwException();
+      });
+
+      it("inherits .extend", function() {
+        expect(Model.extend).to.eql(Vegas.Model.extend);
+      });
+
+      it("inherits all instances methods", function() {
+        var vegasModel = new Vegas.Model();
+        var model = new Model;
+
+        expect(model.destroy).to.eql(vegasModel.destroy);
+        expect(model.fetch).to.eql(vegasModel.fetch);
+        expect(model.get).to.eql(vegasModel.get);
+        expect(model.isNew).to.eql(vegasModel.isNew);
+        expect(model.save).to.eql(vegasModel.save);
+        expect(model.set).to.eql(vegasModel.set);
+      });
+
+      describe("default url", function() {
+        var Model = Vegas.Model.extend({url: "myUrl"});
+
+        it("accepts a default URL", function() {
+          expect(Model.prototype).to.have.property("url");
+        });
+
+        it("instances inherit URL", function() {
+          var model = new Model;
+          expect(model.url).to.be("myUrl");
+        });
+      });
+
+      describe("initializer", function() {
+        var Model = new Vegas.Model.extend({
+          initialize: function(a, b) {
+            this.a = a;
+            this.b = b;
           }
-        }).to.not.throwException();
+        });
+
+        it("runs on model inicialization", function() {
+          var model = new Model(1, 2);
+          expect(model.a).to.be(1);
+          expect(model.b).to.be(2);
+        });
+      });
+
+      describe("custom default property", function() {
+        var Model = Vegas.Model.extend({customProperty: "someValue" })
+
+        it("is inherited by the class instances", function() {
+          var model = new Model;
+          expect(model.customProperty).to.be("someValue");
+        });
+      });
+
+      describe("custom method", function() {
+        function customMethod() {
+          return "this is a custom method";
+        }
+        function customSave() {
+          return "this overides the default save method"
+        }
+
+        var Model = Vegas.Model.extend({
+          customMethod: customMethod,
+          save: customSave
+        });
+
+        it("is inherited by the class instances", function() {
+          var model = new Model;
+          expect(model.customMethod).to.eql(customMethod);
+        });
+
+        it("overides default methods", function() {
+          var model = new Model;
+          expect(model.save).to.eql(customSave);
+        });
+      });
+    });
+
+    describe("extended constructor function by default", function() {
+      var Model = Vegas.Model.extend();
+
+      it("accepts an url on inicialization", function() {
+        var model = new Model({url: "my/model/url"});
+        expect(model.url).to.be("my/model/url");
+      });
+
+      it("accepts attributes on inicialization", function() {
+        var model = new Model({name: "John", lastName: "Doe"});
+        expect(model.get("name")).to.be("John");
+        expect(model.get("lastName")).to.be("Doe");
       });
     });
   });
