@@ -14,10 +14,10 @@ var Vegas = (function() {
         }
 
         this.attributes = properties;
-      } else {
-        this.attributes = {};
-        this.url = "";
       }
+
+      if (!this.attributes) this.attributes = {};
+      if (!this.url) this.url = "";
 
       return this;
     };
@@ -109,12 +109,12 @@ var Vegas = (function() {
 
         function VegasModel() {
           VegasModel.__super__.constructor.apply(this, arguments);
-          if (initializer) initializer.call(VegasModel, arguments);
+          if (initializer) initializer.apply(this, arguments);
         }
 
         return VegasModel;
 
-      })(this, initializer);
+      })(VegasModel, initializer);
 
       // applying saved url, if exists
       if (url) CustomModel.prototype.url = url;
