@@ -2,8 +2,13 @@ describe("VegasModel", function() {
 
   describe("constructor", function() {
 
+    
     context("when no params are given", function() {
       var model = new Vegas.Model;
+
+      it("returns the created model", function() {
+        expect(new Vegas.Model).to.eql(model);
+      });
 
       describe("#url", function() {
         it("exists", function() {
@@ -16,7 +21,7 @@ describe("VegasModel", function() {
       });
 
       describe("#attributes", function () {
-        it("exist", function() {
+        it("exists", function() {
           expect(model).to.have.property("attributes");
         });
 
@@ -34,6 +39,10 @@ describe("VegasModel", function() {
 
     context("when an invalid parameters are given", function() {
       var model = new Vegas.Model("invalid argument");
+
+      it("returns the created model", function() {
+        expect(new Vegas.Model).to.eql(model);
+      });
 
       describe("#url", function() {
         it("exists", function() {
@@ -85,6 +94,14 @@ describe("VegasModel", function() {
         it("contain all and only the other given keys", function() {
           expect(attributes).to.only.have.keys("name", "address");
         });
+      });
+
+      it("returns the created model", function() {
+        expect(new Vegas.Model({
+          url: "my/url",
+          name: "some name",
+          address: "some address"
+        })).to.eql(model);
       });
     });
   });
@@ -296,7 +313,7 @@ describe("VegasModel", function() {
     });
   });
 
-  describe.only("#destroy", function() {
+  describe("#destroy", function() {
     context("when it has no URL", function() {
       var model = new Vegas.Model;
       it("raises an exception", function() {

@@ -18,12 +18,14 @@ var Vegas = (function() {
         this.attributes = {};
         this.url = "";
       }
+
+      return this;
     };
 
     // Instance Methods
     VegasModel.prototype.destroy = function() {
       if (!this.url) throw "Cannot destroy model with no url";
-
+      if (this.isNew()) throw "Cannot destroy model with no id";
       delete localStorage[this.url + "<" + this.get("id") + ">"];
       return this;
     };
