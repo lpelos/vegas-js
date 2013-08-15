@@ -30,13 +30,11 @@ var Vegas = (function() {
       return this;
     };
 
-    VegasModel.prototype.extend = extendVegasModel;
-
     VegasModel.prototype.fetch = function() {
       if (!this.url) throw "Cannot fetch model with no url";
 
       if (this.get("id")) {
-        var attributes = getObject(this.url + "<" + this.get("id") + ">");
+        var attributes = __getObject(this.url + "<" + this.get("id") + ">");
         if (attributes) {
           this.set(attributes);
           return this;
@@ -59,8 +57,8 @@ var Vegas = (function() {
     VegasModel.prototype.save = function() {
       if (!this.url) throw "Cannot save model with no url";
 
-      if (this.isNew()) this.set("id", generateId.call(this));
-      setObject(this.url + "<" + this.get("id") + ">", this.attributes);
+      if (this.isNew()) this.set("id", __generateId.call(this));
+      __setObject(this.url + "<" + this.get("id") + ">", this.attributes);
       return true;
     };
 
@@ -81,13 +79,10 @@ var Vegas = (function() {
     };
 
     // Class methods
-    VegasModel.extend = extendVegasModel;
-
-    // Private
-    function extendVegasModel(customProperties) {
+    VegasModel.extend = function(customProperties) {
       if (customProperties) {
         if (!(customProperties instanceof Object))
-          throw "Cannot extend VegasModel: invalid arguments";
+          throw "Cannot extend VegasModel: invalid arguments. Argument should be an object";
 
         // isolating url from customProperties, if given
         var url = customProperties.url || null;
@@ -108,36 +103,32 @@ var Vegas = (function() {
         }
       }
 
-      // Custom VegasModel constructor
-      VegasModel = function() {
-        ParentModel.call(this, customProperties);
-        if (initializer) initializer.call(this, arguments);
-      };
+      // Custom VegasModel class
+      var CustomModel = (function(_super, initializer) {
+        __inherit(VegasModel, _super);
 
-      // Inherit from ParentModel
-      var ParentModel = this;
-      for (var key in ParentModel) {
-        if (ParentModel.hasOwnProperty(key))
-          VegasModel[key] = ParentModel[key];
-      }
-      var ctor = function() { this.constructor = VegasModel; }
-      ctor.prototype = ParentModel.prototype;
-      VegasModel.prototype = new ctor;
-      VegasModel.prototype.constructor = VegasModel;
-      VegasModel.prototype.__super__ = ParentModel.prototype;
+        function VegasModel() {
+          VegasModel.__super__.constructor.apply(this, arguments);
+          if (initializer) initializer.call(VegasModel, arguments);
+        }
+
+        return VegasModel;
+
+      })(this, initializer);
 
       // applying saved url, if exists
-      if (url) VegasModel.prototype.url = url;
+      if (url) CustomModel.prototype.url = url;
 
       // applying saved methods, if any
       for (var key in methods) {
-        VegasModel.prototype[key] = methods[key];
+        CustomModel.prototype[key] = methods[key];
       }
 
-      return VegasModel;
+      return CustomModel;
     };
 
-    function generateId() {
+    // private methods
+    function __generateId() {
       var count = localStorage.getItem(this.url + "Count");
       if (!count || isNaN(parseFloat(count)) || !isFinite(count) ) {
         localStorage.setItem(this.url + "Count", 0);
@@ -149,12 +140,24 @@ var Vegas = (function() {
       return localStorage.getItem(this.url + "Count");
     };
 
-    function getObject(key) {
+    function __getObject(key) {
       var value = localStorage.getItem(key);
       return value && JSON.parse(value);
     };
 
-    function setObject(key, value) {
+    function __inherit(child, parent) {
+      for (var key in parent) {
+        if (parent.hasOwnProperty(key)) child[key] = parent[key];
+      }
+
+      function ctor() { this.constructor = child;}
+      ctor.prototype = parent.prototype;
+      child.prototype = new ctor();
+      child.__super__ = parent.prototype;
+      return child;
+    };
+
+    function __setObject(key, value) {
       localStorage.setItem(key, JSON.stringify(value));
     };
 
@@ -196,7 +199,7 @@ var Vegas = (function() {
       for (var key in localStorage) {
         var criteria = new RegExp(this.url + "<\\d+>")
         if (key.match(criteria)) {
-          var attributes = Vegas.Model.getObject(key);
+          var attributes = Vegas.Model.__getObject(key);
           var model = new Vegas.Model(attributes);
           this.models.push(model);
         };
