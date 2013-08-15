@@ -296,6 +296,37 @@ describe("VegasModel", function() {
     });
   });
 
+  describe.only("#destroy", function() {
+    context("when it has no URL", function() {
+      var model = new Vegas.Model;
+      it("raises an exception", function() {
+        expect(model.destroy).to.throwException();
+      });
+    });
+
+    context("when it has no id", function() {
+      var model = new Vegas.Model({url: "models"});
+      it("raises an exception", function() {
+        expect(model.destroy).to.throwException();
+      });
+    });
+
+    context("when it is valid", function() {
+      var model = new Vegas.Model({url: "models", name: "abc"});
+      model.save();
+      
+      it("returns the model", function() {
+        expect(model.destroy()).to.eql(model);
+      });
+
+      it("removes the model's correspondent register from the localStorage", function() {
+        var key = model.url + "<" + model.get("id") + ">";
+
+        expect(localStorage[key]).to.be(undefined);
+      });
+    });
+
+  });
 
   function cloneObj(originalObj) {
     var obj = {};
