@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Nothing+You+Could+Do);
+
 article {
   margin: 0 auto;
   max-width: 750px;
@@ -9,6 +11,12 @@ aside {
   color: #999;
   font-size: 0.8em;
   font-style: italic;
+}
+
+h1 {
+  font-family: 'Nothing You Could Do', cursive;
+  font-size: 60px !important;
+  line-height: 1.2em !important;
 }
 
 nav {
@@ -33,7 +41,7 @@ nav {
 }
 
 .author {
-  margin: -15px 0 0 5px;
+  margin: -30px 0 0 95px;
 }
 
 .uk-nav .uk-nav-header > a {
