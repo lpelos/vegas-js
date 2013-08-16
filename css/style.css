@@ -52,27 +52,26 @@ nav {
   }
 }
 
-@media (min-width: 955px) {
-  article {
-    max-width: 750px;
-  }
-}
-
 @media (min-width: 700px) {
   article, nav {
     float: left;
   }
 
-  article {
-    margin-bottom: 30px;
-  }
-
-  body {
-    margin-top: 30px;
-  }
-
   #download a {
     float: left;
     width: 27%;
+  }
+}
+
+@media (min-width: 955px) {
+  body {
+    margin-left: 3%;
+    margin-top: 30px;
+  }
+
+  article {
+    border-left: 1px solid #ddd;
+    max-width: 730px;
+    padding-left: 30px;
   }
 }
