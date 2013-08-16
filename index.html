@@ -28,7 +28,6 @@
 </nav>
 
 <article class="uk-article">
-    
 
   <section id="intro">
     <h1 class="uk-article-title">VegasJS</h1>
@@ -60,6 +59,21 @@
       <h2>What is it?</h2>
 
       <p>VegasJS is a JavaScript library inspired by <a href="http://backbonejs.org/#introduction" target="blank">BackboneJS</a>, which provides you Models and Colletions structures so you can keep your client-side data organized, but instead of storaging them in a databases via JSON interface, it uses <a href="http://en.wikipedia.org/wiki/Web_storage" target="blank">HTML<i class="uk-icon-html5"></i> Web Storage</a>.</p>
+
+      <p>Since Web Storage is not a reliable way of keeping your data safe, once it's data is only accessible on the browser theat generated it and will be wiped out by a simple <code>localStorage.clear()</code>, despite the joke at the presentation, it would not be a wise choice to use VegasJS for data persistance.</p>
+
+      <p>Why bother using it then? Here is two examples:</p>
+      <ul class="uk-list">
+        <li>
+          <i class="uk-icon-double-angle-right"></i>
+          <strong>Bettering UX:</strong>
+          to admininstrate data you requested once from the server and you know it won't change soon, keeping it on the client and avoiding unecessary requests.
+        </li>
+        <li>
+          <i class="uk-icon-double-angle-right"></i>
+          <strong>Front-end Developing:</strong> POC apps using some framework like BackconeJS, EmberJS or AngularJS, for instance. No need to spend time building a JSON API when there is no need of keeping the data.
+        </li>
+      </ul>
 
     </section>
 
