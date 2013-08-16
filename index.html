@@ -2,9 +2,77 @@
 <head>
 	<title>VegasJS</title>
   <link rel="stylesheet" type="text/css" href="vendor/uikit-1.0.2/css/uikit.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 	<script type="text/javascript" src="https://rawgithub.com/lpelos/vegas-js/master/vegas.js"></script>
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
 </head>
 <body>
+
+<article class="uk-article">
+  <nav class="uk-show-large">
+    <ul class="uk-nav">
+      <li class="uk-nav-header"><a href="#home">Intro</a></li>
+      <li><a href="#what_is_it">What is it?</a></li>
+      <li><a href="#requirements">Requirements</a></li>
+      <li class="uk-nav-divider"></li>
+    </ul>
+  </nav>
+
+  <section id="intro">
+    <h1 class="uk-article-title">VegasJS</h1>
+    <p class="author uk-article-meta">maintained by <a href="https://github.com/lpelos">lpelos</a></p>
+
+    <p>No need for going anywhere to persist your data. <br />
+    What happens in Vegas, stays in Vegas.</p>
+    <aside>
+      PS: at Vegas you're on your own, trust it and you may see everything you saved disapear in the blink of an eye at the first slip or lack of luck.
+    </aside>
+
+    <div id="download" class="uk-clearfix">
+      <a href="https://github.com/lpelos/vegas-js/zipball/master" class="uk-button uk-button-large">
+        <i class="uk-icon-archive"></i> Download .zip
+      </a>
+
+      <a href="https://github.com/lpelos/vegas-js/tarball/master" class="uk-button uk-button-large">
+        <i class="uk-icon-archive"></i> Download .tar.gz
+      </a>
+
+      <a href="https://github.com/lpelos/vegas-js" class="uk-button uk-button-large">
+        <i class="uk-icon-github"></i> View on GitHub
+      </a>      
+    </div>
+
+    <hr class="uk-article-divider" />
+
+    <section id="what_is_it">
+      <h2>What is it?</h2>
+
+      <p>VegasJS is a JavaScript library inspired by <a href="http://backbonejs.org/#introduction" target="blank">BackboneJS</a>, which provides you Models and Colletions structures so you can keep your client-side data organized, but instead of storaging them in a databases via JSON interface, it uses <a href="http://en.wikipedia.org/wiki/Web_storage" target="blank">HTML<i class="uk-icon-html5"></i> Web Storage</a>.</p>
+
+    </section>
+
+    <hr class="uk-article-divider" />
+
+    <section id="requirements">
+      <h2>Requirements</h2>
+
+      <p>For Vegas uses HTML<i class="uk-icon-html5"></i> localStorage to store data, it only works in browsers that support this feature, like the following:</p>
+
+      <ul class="uk-list">
+        <li>Google Chrome 4+</li>
+        <li>Firefox 3.5+</li>
+        <li>Safari 4+</li>
+        <li>Opera 11+</li>
+        <li>IE 8+</li>
+      </ul>
+    </section>
+
+  </section>
+
+</article>
 
 </body>
 </html>
