@@ -2,7 +2,6 @@
 
 article {
   margin: 0 auto;
-  max-width: 750px;
   padding: 10px;
   position: relative;
 }
@@ -20,12 +19,6 @@ h1 {
 }
 
 nav {
-  bottom: 0;
-  border-right: 1px solid #ddd;
-  left: -190px;
-  margin-right: 20px;
-  position: absolute;
-  top: 0;
   width: 170px;
 }
 
@@ -53,9 +46,28 @@ nav {
   text-decoration: underline;
 }
 
+@media (max-width: 955px) {
+  nav {
+    display: none;
+  }
+}
+
+@media (min-width: 955px) {
+  article {
+    max-width: 750px;
+  }
+}
+
 @media (min-width: 700px) {
+  article, nav {
+    float: left;
+  }
+
   article {
     margin-bottom: 30px;
+  }
+
+  body {
     margin-top: 30px;
   }
 
