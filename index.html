@@ -16,14 +16,24 @@
   <![endif]-->
 </head>
 
-<body>
+<body class="uk-clearfix">
 
 <nav>
   <ul class="uk-nav">
     <li class="uk-nav-header"><a href="#home">Intro</a></li>
-    <li><a href="#what_is_it">What is it?</a></li>
+    <li><a href="#download">Download</a></li>
     <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#usage">Usage</a></li>
     <li class="uk-nav-divider"></li>
+    
+    <!-- <li class="uk-nav-header"><a href="#models">Models</a></li>
+    <li class="uk-parent">
+      <ul class="uk-nav-sub">
+        <li><a href="#model_extend">.extend</a></li>
+        <li><a href="#model_get">#get</a></li>
+        <li><a href="#model_set">#set</a></li>
+      </ul>
+    </li> -->
   </ul>
 </nav>
 
@@ -60,7 +70,7 @@
 
       <p>VegasJS is a JavaScript library inspired by <a href="http://backbonejs.org/#introduction" target="blank">BackboneJS</a>, which provides you Models and Colletions structures so you can keep your client-side data organized, but instead of storaging them in a databases via JSON interface, it uses <a href="http://en.wikipedia.org/wiki/Web_storage" target="blank">HTML<i class="uk-icon-html5"></i> Web Storage</a>.</p>
 
-      <p>Since Web Storage is not a reliable way of keeping your data safe, once it's data is only accessible on the browser theat generated it and will be wiped out by a simple <code>localStorage.clear()</code>, despite the joke at the presentation, it would not be a wise choice to use VegasJS for data persistance.</p>
+      <p>Since Web Storage is not a reliable way of keeping your data safe, once it's is only accessible on the browser that generated it and can be easilly wiped out by a simple <code>localStorage.clear()</code>, despite the joke at the presentation, it would not be a wise to use VegasJS for data persistance.</p>
 
       <p>Why bother using it then? Here is two examples:</p>
       <ul class="uk-list">
@@ -91,6 +101,28 @@
         <li>Opera 11+</li>
         <li>IE 8+</li>
       </ul>
+    </section>
+
+    <hr class="uk-article-divider" />
+
+    <section id="usage">
+      <h2>Usage</h2>
+
+      <p>To include VegasJS in your document is all that is takes.</p>
+
+      <div class="uk-panel uk-panel-box">
+        <h3 class="uk-panel-title">Example:</h3>
+        <code>
+          <span class="tag">
+            &lt;script
+            <span class="attribute">type</span>=&quot;<span class="value">text/javascript</span>&quot;
+            <span class="attribute">src</span>=&quot;<span class="value">vegas.js</span>&quot;&gt;&lt;/script&gt;
+          </span>
+        </code>
+      </div>
+
+      <p>After that, you can use Vegas' Models and Collections or extend them and create your own client-side "persistable" classes.</p>
+
     </section>
 
   </section>
