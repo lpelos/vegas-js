@@ -27,13 +27,11 @@
     <li class="uk-nav-divider"></li>
     
     <li class="uk-nav-header"><a href="#model">Model</a></li>
-    <!-- <li class="uk-parent">
+    <li class="uk-parent">
       <ul class="uk-nav-sub">
         <li><a href="#model_extend">.extend</a></li>
-        <li><a href="#model_get">#get</a></li>
-        <li><a href="#model_set">#set</a></li>
       </ul>
-    </li> -->
+    </li>
   </ul>
 </nav>
 
@@ -127,7 +125,7 @@
   <section id="model">
     <h2>Vegas.Model</h2>
     <p>Models hold all the class and instance methods and properties. <strong>Vegas.Model</strong> can be instanced and used directally or extended to a custom class.</p>
-    <p>It has expect basic attributes:</p>
+    <p>It expects the following attributes:</p>
     <dl class="uk-clearfix">
       <dt><i class="uk-icon-double-angle-right"></i> url:</dt>
       <dd>the key used to store the object, added to it's id, on lodalStorage object.</dd>
@@ -139,18 +137,57 @@
       <h3 class="uk-panel-title">Example:</h3>
       <code class="javascript">
 
-<pre>var person = new Vegas.Model({
-  url: "people",
-  name: "John",
-  lastName: "Doe",
-  age: 42
+<pre><span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">Vegas.Model</span>({
+    url: <span class="str">"people"</span>,
+    name: <span class="str">"John"</span>,
+    lastName: <span class="str">"Doe"</span>,
+    age: <span class="lit">42</span>
 });</pre>
 
       </code>
-  </div>
+    </div>
 
-  <p>The object url can be retreived and modified by manipulating its property "url". In this case: <code>person.url</code>.</p>
-  <p>All the other properties of the object given to the model's contructor will automatically set in the instance attrivute object and can be get our modified by the use of the instance methods <code>.get</code> and <code>.set</code>.</p>
+    <p>The object url can be retreived and modified by manipulating its property "url". In this case: <code>person.url</code>.</p>
+    <p>All the other properties of the object given to the model's contructor will automatically set in the instance attrivute object and can be get our modified by the use of the instance methods <code>.get</code> and <code>.set</code>.</p>
+
+    <section id="model_extend" class="method-title">
+      <h3>.extend</h3>
+
+      <p>It expects an object which may contain:</p>
+
+      <dl class="uk-clearfix">
+        <dt><i class="uk-icon-double-angle-right"></i> initialize:</dt>
+        <dd>a function that will be executed on the extended model instances inicialization.</dd>
+        <dt><i class="uk-icon-double-angle-right"></i> custom properties:</dt>
+        <dd>instance methods and properties that are gonna me set in the prototype chain.</dd>
+      </dl>
+
+      <p>It returns an constructor function with the custom properties and methods passed in the argument object, to be used as a class.</p>
+
+      <div class="uk-panel uk-panel-box">
+        <h3 class="uk-panel-title">Example:</h3>
+        <code class="javascript">
+
+<pre><span class="kwd">var</span> <span class="typ">People</span> = <span class="typ">Vegas.Model</span>.extend({
+    url: <span class="str">"people"</span>,
+    initialize: <span class="kwd">function</span>(name, lastName) {
+        this.set({
+            name: name,
+            lastName: lastName
+        });
+    },
+    presentSelf: <span class="kwd">function</span>() {
+        alert(<span class="str">"Hi, I'm "</span> + this.get(<span class="str">"name"</span>)  + " " + this.get(<span class="str">"lastName"</span>);
+    }
+});
+
+<span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">People</span>(<span class="str">"John"</span>, <span class="str">"Doe"</span>);
+person.presentSelf();
+</pre>
+
+        </code>
+      </div>
+    </section>
 
   </section>
 

@@ -25,13 +25,28 @@ code .tag .attribute {
   color: #008080;
 }
 
-code .tag .value,
-code.javascript .string {
+code .tag .value {
   color: #d14 !important;
 }
 
 code.javascript {
   color: rgb(102, 102, 102);
+}
+
+code.javascript .kwd {
+  color: #008;
+}
+
+code.javascript .lit {
+  color: #066;
+}
+
+code.javascript .str {
+  color: #080;
+}
+
+code.javascript .typ {
+  color: #606;
 }
 
 dd, dt {
@@ -70,6 +85,10 @@ nav {
 
 .author {
   margin: -30px 0 0 95px;
+}
+
+.method-title {
+  margin: 30px 0 15px;
 }
 
 .uk-nav > li > a {
