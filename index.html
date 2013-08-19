@@ -26,8 +26,8 @@
     <li><a href="#usage">Usage</a></li>
     <li class="uk-nav-divider"></li>
     
-    <!-- <li class="uk-nav-header"><a href="#models">Models</a></li>
-    <li class="uk-parent">
+    <li class="uk-nav-header"><a href="#model">Model</a></li>
+    <!-- <li class="uk-parent">
       <ul class="uk-nav-sub">
         <li><a href="#model_extend">.extend</a></li>
         <li><a href="#model_get">#get</a></li>
@@ -114,16 +114,43 @@
         <h3 class="uk-panel-title">Example:</h3>
         <code>
           <span class="tag">
-            &lt;script
-            <span class="attribute">type</span>=&quot;<span class="value">text/javascript</span>&quot;
-            <span class="attribute">src</span>=&quot;<span class="value">vegas.js</span>&quot;&gt;&lt;/script&gt;
+            &lt;script <span class="attribute">type</span>=&quot;<span class="value">text/javascript</span>&quot; <wbr /><span class="attribute">src</span>=&quot;<span class="value">vegas.js</span>&quot;&gt;<wbr />&lt;/script&gt;
           </span>
         </code>
       </div>
-
-      <p>After that, you can use Vegas' Models and Collections or extend them and create your own client-side "persistable" classes.</p>
-
     </section>
+
+  </section>
+
+  <hr class="uk-article-divider" />
+
+  <section id="model">
+    <h2>Vegas.Model</h2>
+    <p>Models hold all the class and instance methods and properties. <strong>Vegas.Model</strong> can be instanced and used directally or extended to a custom class.</p>
+    <p>It has expect basic attributes:</p>
+    <dl class="uk-clearfix">
+      <dt><i class="uk-icon-double-angle-right"></i> url:</dt>
+      <dd>the key used to store the object, added to it's id, on lodalStorage object.</dd>
+      <dt><i class="uk-icon-double-angle-right"></i> attributes:</dt>
+      <dd>an object in which contains all the instance data that is suppose to be saved.</dd>
+    </dl>
+
+    <div class="uk-panel uk-panel-box">
+      <h3 class="uk-panel-title">Example:</h3>
+      <code class="javascript">
+
+<pre>var person = new Vegas.Model({
+  url: "people",
+  name: "John",
+  lastName: "Doe",
+  age: 42
+});</pre>
+
+      </code>
+  </div>
+
+  <p>The object url can be retreived and modified by manipulating its property "url". In this case: <code>person.url</code>.</p>
+  <p>All the other properties of the object given to the model's contructor will automatically set in the instance attrivute object and can be get our modified by the use of the instance methods <code>.get</code> and <code>.set</code>.</p>
 
   </section>
 

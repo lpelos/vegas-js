@@ -12,6 +12,11 @@ aside {
   font-style: italic;
 }
 
+code pre {
+  margin: 0;
+  padding: 0;
+}
+
 code .tag {
   color: #000080;
 }
@@ -20,8 +25,22 @@ code .tag .attribute {
   color: #008080;
 }
 
-code .tag .value {
-  color: #d14;
+code .tag .value,
+code.javascript .string {
+  color: #d14 !important;
+}
+
+code.javascript {
+  color: rgb(102, 102, 102);
+}
+
+dd, dt {
+  float: left;
+}
+
+dt {
+  clear: left;
+  margin-right: 4px;
 }
 
 h1 {
