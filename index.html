@@ -35,6 +35,7 @@
         <li><a href="#model_save">.save</a></li>
         <li><a href="#model_isNew">.isNew</a></li>
         <li><a href="#model_fetch">.fetch</a></li>
+        <li><a href="#model_destroy">.destroy</a></li>
       </ul>
     </li>
   </ul>
@@ -238,7 +239,7 @@ person.presentSelf();
     <section id="model_fetch">
       <h3 class="method-title">.fetch()</h3>
 
-      <p>It fetches in WebStorage for data which key matches the model's URL and ID and, if found, updates its attributes.</p>
+      <p>It fetches in Web Storage for data which key matches the model's URL and ID and, if found, updates its attributes.</p>
 
       <div class="uk-panel uk-panel-box">
         <h3 class="uk-panel-title">Example:</h3>
@@ -253,6 +254,12 @@ person.fetch();</pre>
 
         </code>
       </div>
+    </section>
+
+    <section id="model_destroy">
+      <h3 class="method-title">.destroy()</h3>
+
+      <p>Remove the register referent to the model from the Web Storage. Ex.: <code>person.destroy()</code></p>.
     </section>
 
   </section>
