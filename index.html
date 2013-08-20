@@ -43,6 +43,10 @@
     <li class="uk-parent">
       <ul class="uk-nav-sub">
         <li><a href="#collection_add">.add</a></li>
+        <li><a href="#collection_get">.get</a></li>
+        <li><a href="#collection_remove">.remove</a></li>
+        <li><a href="#collection_fetch">.fetch</a></li>
+        <li><a href="#collection_reset">.reset</a></li>
       </ul>
     </li>
   </ul>
@@ -50,7 +54,7 @@
 
 <article class="uk-article">
 
-  <section id="intro">
+  <section id="home">
     <h1 class="uk-article-title">VegasJS</h1>
     <p class="author uk-article-meta">maintained by <a href="https://github.com/lpelos">lpelos</a></p>
 
@@ -103,7 +107,7 @@
     <section id="requirements">
       <h2>Requirements</h2>
 
-      <p>For Vegas uses HTML<i class="uk-icon-html5"></i> localStorage to store data, it only works in browsers that support this feature, like the following:</p>
+      <p>For Vegas uses HTML<i class="uk-icon-html5"></i> Web Storage to store data, it only works in browsers that support this feature, like the following:</p>
 
       <ul class="uk-list">
         <li>Google Chrome 4+</li>
@@ -139,6 +143,7 @@
     <h2>Vegas.Model</h2>
     <p>Models hold all the class and instance methods and properties. <strong>Vegas.Model</strong> can be instanced and used directally or extended to a custom class.</p>
     <p>On inicialization, accepts an object with the following attributes:</p>
+
     <dl class="uk-clearfix">
       <dt><i class="uk-icon-double-angle-right"></i> url:</dt>
       <dd>the key used to store the object, added to it's id, on lodalStorage object.</dd>
@@ -287,7 +292,7 @@ person.fetch();
 
     <dl class="uk-clearfix">
       <dt><i class="uk-icon-double-angle-right"></i> url:</dt>
-      <dd>the key used in the search for models in the localStorage, matching with their "url" property.</dd>
+      <dd>the key used in the search for models in the Web Storage, matching with their "url" property.</dd>
 
       <dt><i class="uk-icon-double-angle-right"></i> model:</dt>
       <dd>the constructor function to be used on the models fetching process. Default: <code>Vegas.Model</code>.</dd>
@@ -317,23 +322,63 @@ person.fetch();
     <section id="collection_add">
       <h3 class="method-title">.add(model)</h3>
 
-      <p>Add the given model to the collection models array.</p>
-      <p>Accept either a model instance or an object containing the attributes of a model to be intanced automatically.</p>
+      <p>Add the given model(s) to the collection models array.</p>
+      <p>Accept either one of the following:</p>
+
+      <ul class="uk-list">
+        <li><i class="uk-icon-double-angle-right"></i> a model instance.</li>
+        <li><i class="uk-icon-double-angle-right"></i> an object containing the attributes of a model to me instanced automatically.</li>
+        <li><i class="uk-icon-double-angle-right"></i> an array of any of the options above.</li>
+      </ul>
 
       <div class="uk-panel uk-panel-box">
         <h3 class="uk-panel-title">Example:</h3>
         <code class="javascript">
 
 <pre>
-<span class="kwd">var</span> person = new <span class="typ">Person</span>();
-
+<span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">Person</span>();
 peopleList.add(person);
 
-peopleList.add({ name: <span class="str">"Jack"</span>, lastName: <span class="str">"Schneider"</span> });
+peopleList.add({ name: <span class="str">"John"</span>, lastName: <span class="str">"Doe"</span> });
+
+<span class="kwd">var</span> randomGuy = <span class="kwd">new</span> <span class="typ">Person</span>();
+
+peopleList.add([
+    randomGuy,
+    { name: <span class="str">"Jane"</span>, lastName: <span class="str">"Smith"</span> },
+    { name: <span class="str">"Jack"</span>, lastName: <span class="str">"Smith"</span> }
+]);
 </pre>
 
         </code>
       </div>
+    </section>
+
+    <section id="collection_get">
+      <h3 class="method-title">.get(id)</h3>
+      <p>Return the model with the given id if contained in the collection. Ex.: <code>personList.get(2)</code>.</p>
+    </section>
+
+    <section id="collection_remove">
+      <h3 class="method-title">.remove(model)</h3>
+      <p>Remove the given model from the collection and returns the model itself.</p>
+    </section>
+
+    <section id="collection_pop">
+      <h3 class="method-title">.pop(id)</h3>
+      <p>Remove and return the model with the given id from the collection, if contained within it. If no arguments is given, assumes the last model of the collection by default.</p>
+    </section>
+
+    <section id="collection_fetch">
+      <h3 class="method-title">.fetch()</h3>
+
+      <p>Fetch in the Web Storage for models with same url value as the collection url and add them to its models array as instances of the constructor function set in the collection's "model" property, if given.</p>
+    </section>
+
+    <section id="collection_reset">
+      <h3 class="method-title">.reset()</h3>
+
+      <p>Clear the collection's models array.</p>
     </section>
 
   </section>
