@@ -34,6 +34,7 @@
         <li><a href="#model_extend">.extend</a></li>
         <li><a href="#model_save">.save</a></li>
         <li><a href="#model_isNew">.isNew</a></li>
+        <li><a href="#model_fetch">.fetch</a></li>
       </ul>
     </li>
   </ul>
@@ -226,12 +227,32 @@ person.presentSelf();
 
       <p>If the model doesn't have an ID yet, one is automatically generated and set as one of its attribute.</p>
 
-      <p>To find out if a model has already been saved once, use <code>.isNew()</code> or <code>.get("id").</code></p>
+      <p>To find out if a model has already been saved once, use <code>.isNew()</code> or <code>.get("id")</code>.</p>
     </section>
 
     <section id="model_isNew">
       <h3 class="method-title">.isNew()</h3>
       <p>Returns <code>true</code> if the model has no attribute "id".</p>
+    </section>
+
+    <section id="model_fetch">
+      <h3 class="method-title">.fetch()</h3>
+
+      <p>It fetches in WebStorage for data which key matches the model's URL and ID and, if found, updates its attributes.</p>
+
+      <div class="uk-panel uk-panel-box">
+        <h3 class="uk-panel-title">Example:</h3>
+        <code class="javascript">
+
+<pre><span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">Vegas.Model</span>({
+    url: <span class="str">people</span>,
+    id: <span class="lit">1</span>
+});
+
+person.fetch();</pre>
+
+        </code>
+      </div>
     </section>
 
   </section>
