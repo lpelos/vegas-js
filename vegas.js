@@ -32,17 +32,14 @@ var Vegas = (function() {
 
     VegasModel.prototype.fetch = function() {
       if (!this.url) throw "Cannot fetch model with no url";
+      if (this.isNew()) throw "Impossible to fetch model with no id";
 
-      if (this.get("id")) {
-        var attributes = __getObject(this.url + "<" + this.get("id") + ">");
-        if (attributes) {
-          this.set(attributes);
-          return this;
-        } else {
-          return attributes;
-        }
+      var attributes = __getObject(this.url + "<" + this.get("id") + ">");
+      if (attributes) {
+        this.set(attributes);
+        return this;
       } else {
-        throw "Impossible to fetch model with no id";
+        return null;
       }
     };
 
