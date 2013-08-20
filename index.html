@@ -29,6 +29,8 @@
     <li class="uk-nav-header"><a href="#model">Model</a></li>
     <li class="uk-parent">
       <ul class="uk-nav-sub">
+        <li><a href="#model_get">.get</a></li>
+        <li><a href="#model_set">.set</a></li>
         <li><a href="#model_extend">.extend</a></li>
       </ul>
     </li>
@@ -150,6 +152,33 @@
     <p>The object url can be retreived and modified by manipulating its property "url". In this case: <code>person.url</code>.</p>
     <p>All the other properties of the object given to the model's contructor will automatically set in the instance attrivute object and can be get our modified by the use of the instance methods <code>.get</code> and <code>.set</code>.</p>
 
+    <section id="model_get">
+      <h3>.get</h3>
+      <p>It returns the current value of the attribute with the name passed as argument. Ex.: <code>person.get("name")</code>.</p>
+    </section>
+
+    <section id="model_set">
+      <h3>.set</h3>
+      <p>Changes the value of the model's attribute with the name passed as argument.</p>
+      <p>Accepts either one object as argument or two a string and a value, being the string the name of the attribute.</p>
+
+      <div class="uk-panel uk-panel-box">
+        <h3 class="uk-panel-title">Example:</h3>
+        <code class="javascript">
+
+<pre><span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">Vegas.Model</span>();
+
+person.set({
+    name: <span class="str">"John"</span>,
+    lastName: <span class="str">"Doe"</span>
+});
+
+person.set(<span class="str">"age"</span>, <span class="lit">42</span>);
+</pre>
+
+        </code>
+    </section>
+
     <section id="model_extend" class="method-title">
       <h3>.extend</h3>
 
@@ -162,7 +191,7 @@
         <dd>instance methods and properties that are gonna me set in the prototype chain.</dd>
       </dl>
 
-      <p>It returns an constructor function with the custom properties and methods passed in the argument object, to be used as a class.</p>
+      <p>It returns an constructor function with the custom properties and methods passed in the argument object.</p>
 
       <div class="uk-panel uk-panel-box">
         <h3 class="uk-panel-title">Example:</h3>
@@ -184,7 +213,6 @@
 <span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">People</span>(<span class="str">"John"</span>, <span class="str">"Doe"</span>);
 person.presentSelf();
 </pre>
-
         </code>
       </div>
     </section>
