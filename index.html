@@ -32,6 +32,7 @@
         <li><a href="#model_get">.get</a></li>
         <li><a href="#model_set">.set</a></li>
         <li><a href="#model_extend">.extend</a></li>
+        <li><a href="#model_save">.save</a></li>
       </ul>
     </li>
   </ul>
@@ -215,6 +216,16 @@ person.presentSelf();
 </pre>
         </code>
       </div>
+    </section>
+
+    <section id="model_save">
+      <h3>.save</h3>
+
+      <p>It jsonifies the model attributes object and saves it in the Web Storage. Ex.: <code>person.save()</code>.</p>
+
+      <p>If the model doesn't have an ID yet, one is automatically generated and set as one of its attribute.</p>
+
+      <p>To find out if a model has already been saved once, use <code>.isNew()</code> or <code>.get("id").</code></p>
     </section>
 
   </section>
