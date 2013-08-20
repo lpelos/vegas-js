@@ -43,10 +43,11 @@
     <li class="uk-parent">
       <ul class="uk-nav-sub">
         <li><a href="#collection_add">.add</a></li>
-        <li><a href="#collection_get">.get</a></li>
-        <li><a href="#collection_remove">.remove</a></li>
         <li><a href="#collection_fetch">.fetch</a></li>
         <li><a href="#collection_reset">.reset</a></li>
+        <li><a href="#collection_get">.get</a></li>
+        <li><a href="#collection_remove">.remove</a></li>
+        <li><a href="#collection_pop">.pop</a></li>
       </ul>
     </li>
   </ul>
@@ -354,6 +355,18 @@ peopleList.add([
       </div>
     </section>
 
+    <section id="collection_fetch">
+      <h3 class="method-title">.fetch()</h3>
+
+      <p>Fetch in the Web Storage for models with same url value as the collection url and add them to its models array as instances of the constructor function set in the collection's "model" property, if given.</p>
+    </section>
+
+    <section id="collection_reset">
+      <h3 class="method-title">.reset()</h3>
+
+      <p>Clear the collection's models array.</p>
+    </section>
+
     <section id="collection_get">
       <h3 class="method-title">.get(id)</h3>
       <p>Return the model with the given id if contained in the collection. Ex.: <code>personList.get(2)</code>.</p>
@@ -367,18 +380,6 @@ peopleList.add([
     <section id="collection_pop">
       <h3 class="method-title">.pop(id)</h3>
       <p>Remove and return the model with the given id from the collection, if contained within it. If no arguments is given, assumes the last model of the collection by default.</p>
-    </section>
-
-    <section id="collection_fetch">
-      <h3 class="method-title">.fetch()</h3>
-
-      <p>Fetch in the Web Storage for models with same url value as the collection url and add them to its models array as instances of the constructor function set in the collection's "model" property, if given.</p>
-    </section>
-
-    <section id="collection_reset">
-      <h3 class="method-title">.reset()</h3>
-
-      <p>Clear the collection's models array.</p>
     </section>
 
   </section>
