@@ -150,12 +150,14 @@
       <h3 class="uk-panel-title">Example:</h3>
       <code class="javascript">
 
-<pre><span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">Vegas.Model</span>({
+<pre>
+<span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">Vegas.Model</span>({
     url: <span class="str">"people"</span>,
     name: <span class="str">"John"</span>,
     lastName: <span class="str">"Doe"</span>,
     age: <span class="lit">42</span>
-});</pre>
+});
+</pre>
 
       </code>
     </div>
@@ -177,7 +179,8 @@
         <h3 class="uk-panel-title">Example:</h3>
         <code class="javascript">
 
-<pre><span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">Vegas.Model</span>();
+<pre>
+<span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">Vegas.Model</span>();
 
 person.set({
     name: <span class="str">"John"</span>,
@@ -208,7 +211,8 @@ person.set(<span class="str">"age"</span>, <span class="lit">42</span>);
         <h3 class="uk-panel-title">Example:</h3>
         <code class="javascript">
 
-<pre><span class="kwd">var</span> <span class="typ">Person</span> = <span class="typ">Vegas.Model</span>.extend({
+<pre>
+<span class="kwd">var</span> <span class="typ">Person</span> = <span class="typ">Vegas.Model</span>.extend({
     url: <span class="str">"people"</span>,
     initialize: <span class="kwd">function</span>(name, lastName) {
         this.set({
@@ -252,12 +256,14 @@ person.presentSelf();
         <h3 class="uk-panel-title">Example:</h3>
         <code class="javascript">
 
-<pre><span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">Vegas.Model</span>({
+<pre>
+<span class="kwd">var</span> person = <span class="kwd">new</span> <span class="typ">Vegas.Model</span>({
     url: <span class="str">people</span>,
     id: <span class="lit">1</span>
 });
 
-person.fetch();</pre>
+person.fetch();
+</pre>
 
         </code>
       </div>
@@ -294,7 +300,8 @@ person.fetch();</pre>
       <h3 class="uk-panel-title">Example:</h3>
       <code class="javascript">
 
-<pre><span class="kwd">var</span> peopleList = <span class="kwd">new</span> <span class="typ">Vegas.Collection</span>({
+<pre>
+<span class="kwd">var</span> peopleList = <span class="kwd">new</span> <span class="typ">Vegas.Collection</span>({
     url: <span class="str">people</span>,
     model: <span class="typ">Person</span>,
     models: [
@@ -309,6 +316,24 @@ person.fetch();</pre>
 
     <section id="collection_add">
       <h3 class="method-title">.add(model)</h3>
+
+      <p>Add the given model to the collection models array.</p>
+      <p>Accept either a model instance or an object containing the attributes of a model to be intanced automatically.</p>
+
+      <div class="uk-panel uk-panel-box">
+        <h3 class="uk-panel-title">Example:</h3>
+        <code class="javascript">
+
+<pre>
+<span class="kwd">var</span> person = new <span class="typ">Person</span>();
+
+peopleList.add(person);
+
+peopleList.add({ name: <span class="str">"Jack"</span>, lastName: <span class="str">"Schneider"</span> });
+</pre>
+
+        </code>
+      </div>
     </section>
 
   </section>
