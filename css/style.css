@@ -49,12 +49,9 @@ code.javascript .typ {
   color: #606;
 }
 
-dd, dt {
-  float: left;
-}
-
 dt {
   clear: left;
+  float: left;
   margin-right: 4px;
 }
 

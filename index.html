@@ -38,6 +38,12 @@
         <li><a href="#model_destroy">.destroy</a></li>
       </ul>
     </li>
+
+    <li class="uk-nav-header"><a href="#collection">Collection</a></li>
+    <li class="uk-parent">
+      <ul class="uk-nav-sub">
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -201,7 +207,7 @@ person.set(<span class="str">"age"</span>, <span class="lit">42</span>);
         <h3 class="uk-panel-title">Example:</h3>
         <code class="javascript">
 
-<pre><span class="kwd">var</span> <span class="typ">People</span> = <span class="typ">Vegas.Model</span>.extend({
+<pre><span class="kwd">var</span> <span class="typ">Person</span> = <span class="typ">Vegas.Model</span>.extend({
     url: <span class="str">"people"</span>,
     initialize: <span class="kwd">function</span>(name, lastName) {
         this.set({
@@ -259,9 +265,46 @@ person.fetch();</pre>
     <section id="model_destroy">
       <h3 class="method-title">.destroy()</h3>
 
-      <p>Remove the register referent to the model from the Web Storage. Ex.: <code>person.destroy()</code></p>.
+      <p>Remove the register referent to the model from the Web Storage. Ex.: <code>person.destroy()</code>.</p>
     </section>
 
+  </section>
+
+  <hr class="uk-article-divider" />
+
+  <section id="collection">
+    <h2>Vegas.Collection</h2>
+
+    <p>Collection are models lists with some useful methods.</p>
+    <p>On inicialization, accepts an object containing either one or all of the following:</p>
+
+    <dl class="uk-clearfix">
+      <dt><i class="uk-icon-double-angle-right"></i> url:</dt>
+      <dd>the key used in the search for models in the localStorage, matching with their "url" property.</dd>
+
+      <dt><i class="uk-icon-double-angle-right"></i> model:</dt>
+      <dd>the constructor function to be used on the models fetching process. Default: <code>Vegas.Model</code>.</dd>
+
+      <dt><i class="uk-icon-double-angle-right"></i> models:</dt>
+      <dd>an array either of model instances or of objects each one containing attributes which will be automatically converted to a model instance. All the given items will be automatically added to the collection.</dd>
+    </dl>
+
+   <div class="uk-panel uk-panel-box">
+      <h3 class="uk-panel-title">Example:</h3>
+      <code class="javascript">
+
+<pre><span class="kwd">var</span> peopleList = <span class="kwd">new</span> <span class="typ">Vegas.Collection</span>({
+    url: <span class="str">people</span>,
+    model: <span class="typ">Person</span>,
+    models: [
+        { name: <span class="str">"John"</span>, lastName: <span class="str">"Doe"</span> },
+        { name: <span class="str">"Jane"</span>, lastName: <span class="str">"Smith"</span> }
+    ]
+});
+</pre>
+
+      </code>
+    </div>
   </section>
 
 </article>
