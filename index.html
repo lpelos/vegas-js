@@ -42,6 +42,7 @@
     <li class="uk-nav-header"><a href="#collection">Collection</a></li>
     <li class="uk-parent">
       <ul class="uk-nav-sub">
+        <li><a href="#collection_add">.add</a></li>
       </ul>
     </li>
   </ul>
@@ -137,7 +138,7 @@
   <section id="model">
     <h2>Vegas.Model</h2>
     <p>Models hold all the class and instance methods and properties. <strong>Vegas.Model</strong> can be instanced and used directally or extended to a custom class.</p>
-    <p>It expects the following attributes:</p>
+    <p>On inicialization, accepts an object with the following attributes:</p>
     <dl class="uk-clearfix">
       <dt><i class="uk-icon-double-angle-right"></i> url:</dt>
       <dd>the key used to store the object, added to it's id, on lodalStorage object.</dd>
@@ -164,7 +165,7 @@
 
     <section id="model_get">
       <h3 class="method-title">.get(attribute)</h3>
-      <p>It returns the current value of the attribute with the name passed as argument. Ex.: <code>person.get("name")</code>.</p>
+      <p>Return the current value of the attribute with the name passed as argument. Ex.: <code>person.get("name")</code>.</p>
     </section>
 
     <section id="model_set">
@@ -192,7 +193,7 @@ person.set(<span class="str">"age"</span>, <span class="lit">42</span>);
     <section id="model_extend">
       <h3 class="method-title">.extend(properties)</h3>
 
-      <p>It expects an object which may contain:</p>
+      <p>Accept an object which may contain:</p>
 
       <dl class="uk-clearfix">
         <dt><i class="uk-icon-double-angle-right"></i> initialize:</dt>
@@ -201,7 +202,7 @@ person.set(<span class="str">"age"</span>, <span class="lit">42</span>);
         <dd>instance methods and properties that are gonna me set in the prototype chain.</dd>
       </dl>
 
-      <p>It returns an constructor function with the custom properties and methods passed in the argument object.</p>
+      <p>Return an constructor function with the custom properties and methods passed in the argument object.</p>
 
       <div class="uk-panel uk-panel-box">
         <h3 class="uk-panel-title">Example:</h3>
@@ -230,7 +231,7 @@ person.presentSelf();
     <section id="model_save">
       <h3 class="method-title">.save()</h3>
 
-      <p>It jsonifies the model attributes object and saves it in the Web Storage. Ex.: <code>person.save()</code>.</p>
+      <p>Jsonify the model attributes object and saves it in the Web Storage. Ex.: <code>person.save()</code>.</p>
 
       <p>If the model doesn't have an ID yet, one is automatically generated and set as one of its attribute.</p>
 
@@ -245,7 +246,7 @@ person.presentSelf();
     <section id="model_fetch">
       <h3 class="method-title">.fetch()</h3>
 
-      <p>It fetches in Web Storage for data which key matches the model's URL and ID and, if found, updates its attributes.</p>
+      <p>Fetch in Web Storage for data which key matches the model's URL and ID and, if found, updates its attributes.</p>
 
       <div class="uk-panel uk-panel-box">
         <h3 class="uk-panel-title">Example:</h3>
@@ -305,6 +306,11 @@ person.fetch();</pre>
 
       </code>
     </div>
+
+    <section id="collection_add">
+      <h3 class="method-title">.add(model)</h3>
+    </section>
+
   </section>
 
 </article>
